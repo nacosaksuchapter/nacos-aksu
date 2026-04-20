@@ -11,6 +11,8 @@ import {
   UserPlus,
   CalendarDays,
   ShieldCheck,
+  UserCircle,
+  Briefcase,
 } from "lucide-react";
 import {
   Sidebar,
@@ -26,8 +28,12 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
 
-const staffItems = [
+const commonItems = [
   { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
+  { title: "My Profile", url: "/dashboard/profile", icon: UserCircle },
+];
+
+const staffExtras = [
   { title: "Executives", url: "/dashboard/executives", icon: Users },
   { title: "Courses", url: "/dashboard/courses", icon: BookOpen },
   { title: "Materials", url: "/dashboard/materials", icon: FileText },
@@ -39,8 +45,7 @@ const staffItems = [
   { title: "Signups", url: "/dashboard/signups", icon: UserPlus },
 ];
 
-const repItems = [
-  { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
+const repExtras = [
   { title: "My Materials", url: "/dashboard/materials", icon: FileText },
 ];
 
@@ -49,7 +54,7 @@ export const DashboardSidebar = () => {
   const collapsed = state === "collapsed";
   const { isStaff, isAdmin } = useAuth();
   const location = useLocation();
-  const items = isStaff ? staffItems : repItems;
+  const items = [...commonItems, ...(isStaff ? staffExtras : repExtras)];
 
   return (
     <Sidebar collapsible="icon">
@@ -79,23 +84,42 @@ export const DashboardSidebar = () => {
                 );
               })}
               {isAdmin && (
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to="/dashboard/users"
-                      end
-                      className={cn(
-                        "flex items-center gap-2",
-                        location.pathname === "/dashboard/users"
-                          ? "bg-accent-soft text-primary font-medium"
-                          : "hover:bg-secondary"
-                      )}
-                    >
-                      <ShieldCheck className="h-4 w-4" />
-                      {!collapsed && <span>Users & Roles</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <NavLink
+                        to="/dashboard/positions"
+                        end
+                        className={cn(
+                          "flex items-center gap-2",
+                          location.pathname === "/dashboard/positions"
+                            ? "bg-accent-soft text-primary font-medium"
+                            : "hover:bg-secondary"
+                        )}
+                      >
+                        <Briefcase className="h-4 w-4" />
+                        {!collapsed && <span>Positions</span>}
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <NavLink
+                        to="/dashboard/users"
+                        end
+                        className={cn(
+                          "flex items-center gap-2",
+                          location.pathname === "/dashboard/users"
+                            ? "bg-accent-soft text-primary font-medium"
+                            : "hover:bg-secondary"
+                        )}
+                      >
+                        <ShieldCheck className="h-4 w-4" />
+                        {!collapsed && <span>Users & Roles</span>}
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </>
               )}
             </SidebarMenu>
           </SidebarGroupContent>
