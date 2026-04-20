@@ -11,6 +11,8 @@ import {
   UserPlus,
   CalendarDays,
   ShieldCheck,
+  UserCircle,
+  Briefcase,
 } from "lucide-react";
 import {
   Sidebar,
@@ -26,8 +28,12 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
 
-const staffItems = [
+const commonItems = [
   { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
+  { title: "My Profile", url: "/dashboard/profile", icon: UserCircle },
+];
+
+const staffExtras = [
   { title: "Executives", url: "/dashboard/executives", icon: Users },
   { title: "Courses", url: "/dashboard/courses", icon: BookOpen },
   { title: "Materials", url: "/dashboard/materials", icon: FileText },
@@ -39,8 +45,7 @@ const staffItems = [
   { title: "Signups", url: "/dashboard/signups", icon: UserPlus },
 ];
 
-const repItems = [
-  { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
+const repExtras = [
   { title: "My Materials", url: "/dashboard/materials", icon: FileText },
 ];
 
